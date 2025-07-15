@@ -1,5 +1,6 @@
 package com.example.springbootfirst.controllers;
 
+import com.example.springbootfirst.models.JwtResponse;
 import com.example.springbootfirst.models.RegisterDetails;
 import com.example.springbootfirst.models.UserDetailsDto;
 import com.example.springbootfirst.services.AuthService;
@@ -30,6 +31,7 @@ public class AuthController {
     public JwtResponse login(@RequestBody RegisterDetails login) {
         return authService.loginUser(login);
     }
+
 }
 
 

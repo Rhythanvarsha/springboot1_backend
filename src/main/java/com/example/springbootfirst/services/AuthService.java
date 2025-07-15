@@ -1,6 +1,7 @@
 package com.example.springbootfirst.services;
 
 import com.example.springbootfirst.jwt.JwtTokenProvider;
+import com.example.springbootfirst.models.JwtResponse;
 import com.example.springbootfirst.models.RegisterDetails;
 import com.example.springbootfirst.models.Roles;
 import com.example.springbootfirst.models.UserDetailsDto;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class AuthService {
 
@@ -70,14 +73,27 @@ public class AuthService {
     }
 
 
-    public String loginUser(RegisterDetails login) {
+    public JwtResponse loginUser(RegisterDetails login) {
         Authentication authentication =
-                authenticationManager.authenticate(
+                authenticationManager.authenticate(//it calls authenticate method in authenticatemanager interface which gets credentials as argumnt
                         new UsernamePasswordAuthenticationToken(
                                 login.getUserName(), login.getPassword()
                         )
                 );
-        return jwtTokenProvider.generateToken(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        // Extract username
+        String username = login.getUserName();
+
+        // Extract roles
+        List<String> roles = authentication.getAuthorities().stream()
+                .map(role -> role.getAuthority())
+                .collect(Collectors.toList());
+
+        String joinedRoles = String.join(",", roles);
+
+        return new JwtResponse(token, username, joinedRoles);
+
     }
 
 

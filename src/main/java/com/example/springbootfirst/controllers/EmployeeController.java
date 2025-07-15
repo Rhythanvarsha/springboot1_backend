@@ -62,4 +62,9 @@ public class EmployeeController {
     public String deleteEmployeeById(@PathVariable int id){
         return hws.deleteEmployeeById(id);
     }
+
+
+     public String route() {
+        return "hi";
+    }
 }

@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/roles")
-@CrossOrigin("*") // Enable CORS for frontend
+@RequestMapping("/api/auth")// Enable CORS for frontend
 public class RolesController {
 
     @Autowired
     private RolesRepository rolesRepository;
 
-    @GetMapping
+    @GetMapping("/roles")
     public List<Roles> getAllRoles() {
         return rolesRepository.findAll();
     }

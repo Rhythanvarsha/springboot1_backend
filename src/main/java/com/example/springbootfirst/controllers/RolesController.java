@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/roles")
-@CrossOrigin(origins = "*") // Enable CORS for frontend
+@CrossOrigin( "*") // Enable CORS for frontend
 public class RolesController {
 
     @Autowired

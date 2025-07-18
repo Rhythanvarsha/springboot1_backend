@@ -80,7 +80,7 @@ public class AuthService {
                                 login.getUserName(), login.getPassword()
                         )
                 );
-        String token = jwtTokenProvider.generateToken(authentication);
+        String token = jwtTokenProvider.generateToken(authentication); //23CS124
 
         // Extract username
         String username = login.getUserName();

@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/auth")
 @CrossOrigin("*")
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+
 
     @GetMapping
     public List<RegisterDetails> getRegisterDetails(){
@@ -28,7 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public JwtResponse login(@RequestBody RegisterDetails login) {
+    public JwtResponse login(@RequestBody RegisterDetails login) {    //23CS124
         return authService.loginUser(login);
     }
 

@@ -15,4 +15,5 @@ public interface RegisterDetailsRepository extends JpaRepository<RegisterDetails
     Optional<RegisterDetails> findByUserName(String userName);
     boolean existsByEmail(String email); // ✅ add this line
 
+    Optional<RegisterDetails> findByEmpId(int id);
 }

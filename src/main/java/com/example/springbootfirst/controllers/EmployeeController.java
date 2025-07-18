@@ -1,8 +1,9 @@
 package com.example.springbootfirst.controllers;
 
 
-import com.example.springbootfirst.models.Employee;
+
 import com.example.springbootfirst.models.RegisterDetails;
+
 import com.example.springbootfirst.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,33 +19,41 @@ public class EmployeeController {
     EmployeeService hws;
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+
+//    @GetMapping("/")
+//    public List<Employee> getEmployees(){
+//        return hws.getAllEmployees();
+//    }
+
+
+
+
     @GetMapping("/")
     public List<RegisterDetails> getEmployees(){
         return hws.getAllEmployees();
     }
 
 
-//    @PathVariable - getting the data from the path/url
+    //    @PathVariable - getting the data from the path/url
 //    get by employee Id
-    @PreAuthorize("hasRole('USER')")
-    @GetMapping("/id/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/employees/{id}")
     public RegisterDetails getEmployeeById(@PathVariable int id){
         return hws.getEmployeeById(id);
     }
 
 
-//    post - adding data
-@PreAuthorize("hasRole('ADMIN')")
+    //    post - adding data
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public String addEmployee(@RequestBody RegisterDetails emp){
         return hws.addEmployee(emp);
     }
 
 
-//    put - update data
+    //    put - update data
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
+    @PutMapping("/employees/{id}")
     public String updateEmployee(@PathVariable int id, @RequestBody RegisterDetails emp){
         return hws.updateEmployee(id,emp);
     }
@@ -56,15 +65,14 @@ public class EmployeeController {
         return hws.deleteEmployees();
     }
 
-//    delete - delete data
-@PreAuthorize("hasAnyRole('ADMIN','USER')")
+    //    delete - delete data
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @DeleteMapping("/id/{id}")
     public String deleteEmployeeById(@PathVariable int id){
         return hws.deleteEmployeeById(id);
     }
 
-
-     public String route() {
+    public String route() {
         return "hi";
     }
 }

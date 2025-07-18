@@ -1,8 +1,8 @@
 package com.example.springbootfirst.services;
 
-import com.example.springbootfirst.models.Employee;
+
 import com.example.springbootfirst.models.RegisterDetails;
-import com.example.springbootfirst.repository.EmployeeRepository;
+//import com.example.springbootfirst.repository.EmployeeRepository;
 import com.example.springbootfirst.repository.RegisterDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,11 @@ public class EmployeeService {
     @Autowired
     RegisterDetailsRepository regRepo;
 
+
+
+
     public List<RegisterDetails> getAllEmployees(){
-        return regRepo.findAll();
+        return regRepo.findAll  ();
     }
 
     public RegisterDetails getEmployeeById(int id){
@@ -34,7 +37,17 @@ public class EmployeeService {
         return "Employee updated successfully";
     }
 
-    public String deleteEmployeeById(int id){
+    public String deleteEmployeeById(int id) {
+
+        Optional<RegisterDetails> optional = regRepo.findByEmpId(id);
+        if (!optional.isPresent()) {
+            throw new RuntimeException("Employee not found with id: " + id);
+        }
+
+        RegisterDetails employee = optional.get();
+        employee.getRoles().clear();
+        regRepo.save(employee);
+
         regRepo.deleteById(id);
         return "Employee deleted successfully";
     }
@@ -42,5 +55,5 @@ public class EmployeeService {
     public String deleteEmployees(){
         regRepo.deleteAll();
         return "All employee deleted successfully";
-}
+    }
 }
